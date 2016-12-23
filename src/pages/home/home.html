@@ -1,22 +1,23 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <ion-title>My Reminders</ion-title>
   </ion-navbar>
 </ion-header>
-
 
 <ion-content padding>
 
   <h3>Manage Reminders</h3>
 
-
-  <p>display top 3 reminders in list</p>
-
-  <p>
-    <button ion-button color="primary" menuToggle>View Reminders</button>
-  </p>
+  <ion-card>
+    <ion-card-content>
+      a count by category will go here
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block color="primary" (click)="goToRemindersList()">View Reminders</button>
+  </ion-toolbar>
+</ion-footer>

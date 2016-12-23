@@ -3,38 +3,31 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { DataService } from '../../services/data.service';
-import { ItemDetailsPage } from '../item-details/item-details';
+import { ItemDetailsPage } from '../pages';
 
 
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
 })
+
 export class ListPage {
   selectedItem: any;
-  nbrItems: number;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  items: Array<{id: number, category: any, title: string, note: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public dataService: DataService) {
-    // If we navigated to this page, we will have an item available as a nav param    
-    this.selectedItem = navParams.get('item'); // NRB: REALLY?     
-    this.items = [];
-    
+  constructor(public nav: NavController, public navParams: NavParams, public dataService: DataService) {  
+    this.items = [];    
 
-    dataService.getData().then( (itemData) => {
-      if (itemData) {
-        this.items = itemData;
-        this.nbrItems = this.items.length;
-      }
-    });
-  } //constructor
-
+    dataService.getListItems().then(itemData => this.items = itemData);
+  } 
    
-
   itemTapped(event, item) {
-    this.navCtrl.push(ItemDetailsPage, {
+    this.nav.push(ItemDetailsPage, {
       item: item
     });
-  }//itemTapped
+  }
+
+  goHome() {
+    this.nav.popToRoot();
+  }
 }

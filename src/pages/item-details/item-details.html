@@ -1,21 +1,45 @@
 <ion-header>
-  <ion-navbar>   
-    <button menuToggle *ngIf="!selectedItem">
-      <ion-icon name="menu"></ion-icon>
-    </button>
+  <ion-navbar>
+
     <ion-title>Item Details</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="goHome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <h3 text-center *ngIf="selectedItem">
-    {{selectedItem.category}}
-    <ion-icon [name]="selectedItem.icon"></ion-icon>
-  </h3>
-  <h4 *ngIf="selectedItem">
-    <b>{{selectedItem.title}}</b>
-  </h4>
-  <h4 *ngIf="selectedItem">
-    {{selectedItem.note}}
-  </h4>
+<ion-content padding>
+  <!--<h3 text-center *ngIf="selectedItem">
+    {{selectedItem.category.title}}
+    <ion-icon [name]="selectedItem.category.icon"></ion-icon>
+  </h3>-->
+
+  <!--<ion-list>-->
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-select [(ngModel)]="selectedCategory" (ngModelChange)="selectCategory($event, cat)">      
+        <ion-option *ngFor="let cat of categories" value="{{cat}}">
+          <div>
+            {{cat.title}}
+          </div>          
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" aria-placeholder="Title" [(ngModel)]="selectedItem.title"></ion-input>
+    </ion-item>
+        <ion-item>
+      <ion-input type="text" aria-placeholder="Notes" [(ngModel)]="selectedItem.note"></ion-input>
+    </ion-item>
+    
+    <button ion-button block (click)="saveItem()">Save</button>
+
+    <!--</ion-list>-->
+
+
 </ion-content>

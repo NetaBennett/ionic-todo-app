@@ -1,33 +1,33 @@
 <ion-header>
-  <ion-navbar>   
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>My First List</ion-title>
+  <ion-navbar>
+
+    <ion-title>My Reminders</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="goHome()">
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
-<ion-content>
- <div>There are {{nbrItems}} items in storage.</div>
+<ion-content padding>
+
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon name="{{item.icon}}" item-left></ion-icon>
-      {{item.title}}
-      <!--<div class="item-note" item-right>
-        {{item.note}}
-      </div>-->
+      <ion-icon name="{{item.category.icon}}" item-left></ion-icon>
+      {{item.title}}    
     </button>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
+
 </ion-content>
+
 
 <ion-footer>
   <ion-toolbar>
-    <!--<ion-title>Footer</ion-title>-->
-    <button ion-button>
-      <ion-icon name="add-circle"></ion-icon>
+    <button block ion-button>
+      Add Reminder
     </button>
   </ion-toolbar>
 </ion-footer>

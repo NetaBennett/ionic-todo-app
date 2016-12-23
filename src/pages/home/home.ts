@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
+import { ListPage } from '../pages';
 
 @Component({
   selector: 'page-home',
@@ -8,8 +10,12 @@ import { Component } from '@angular/core';
 
 export class HomePage {
 
-  constructor() {
+  constructor(private nav: NavController) {
+
   }
 
+  goToRemindersList() {
+    this.nav.push(ListPage);
+  }
   
 }

@@ -4,8 +4,8 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { HomePage } from '../pages/pages';
+// import { ListPage } from '../pages/list/list';
 
 
 @Component({
@@ -25,10 +25,10 @@ export class MyApp {
     this.initializeApp();
 
     // set our app's pages
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'My First List', component: ListPage }
-    ];
+    // this.pages = [
+    //   { title: 'Home', component: HomePage },
+    //   { title: 'My First List', component: ListPage }
+    // ];
   }
 
   initializeApp() {

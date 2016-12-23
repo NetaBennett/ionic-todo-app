@@ -39,5 +39,5 @@
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [],
-  "description": "MyIonicTutorialApp: An Ionic project"
+  "description": "ionic-todo-app: An Ionic Project"
 }
