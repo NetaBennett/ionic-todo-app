@@ -20,6 +20,17 @@ export class DataService {
         return this.getData(this.LIST_KEY);
     }
 
+    public getGroupedItems() {
+        let list = [];
+        let grouped = [];
+        this.getListItems().then((data) => {
+            list = data;
+            
+            
+            
+        });
+    }
+
     public addListItem(category: any, title: string, note: string) {
         let list = [];
         this.getListItems().then((data) => {

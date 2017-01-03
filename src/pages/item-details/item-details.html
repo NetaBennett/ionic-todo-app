@@ -13,33 +13,37 @@
 </ion-header>
 
 <ion-content padding>
-  <!--<h3 text-center *ngIf="selectedItem">
-    {{selectedItem.category.title}}
-    <ion-icon [name]="selectedItem.category.icon"></ion-icon>
-  </h3>-->
 
-  <!--<ion-list>-->
-    <ion-item>
-      <ion-label>Category</ion-label>
-      <ion-select [(ngModel)]="selectedCategory" (ngModelChange)="selectCategory($event, cat)">      
-        <ion-option *ngFor="let cat of categories" value="{{cat}}">
-          <div>
-            {{cat.title}}
-          </div>          
-        </ion-option>
-      </ion-select>
-    </ion-item>
+  <ion-item>
+    <ion-label>Category</ion-label>
+    <ion-select [(ngModel)]="selectedCategory" (ionChange)="selectedCategoryChange()">
+      <ion-option *ngFor="let cat of categories" [value]="cat">
+        <div>
+          {{cat.title}}
+        </div>
+      </ion-option>
+    </ion-select>
+  </ion-item>
 
-    <ion-item>
-      <ion-input type="text" aria-placeholder="Title" [(ngModel)]="selectedItem.title"></ion-input>
-    </ion-item>
-        <ion-item>
-      <ion-input type="text" aria-placeholder="Notes" [(ngModel)]="selectedItem.note"></ion-input>
-    </ion-item>
-    
-    <button ion-button block (click)="saveItem()">Save</button>
+  <ion-item>
+    <ion-label>Title</ion-label>
+    <ion-input type="text" aria-placeholder="Title" [(ngModel)]="selectedItem.title"></ion-input>
+  </ion-item>
 
-    <!--</ion-list>-->
+  <ion-item>
+    <ion-label>Notes</ion-label>
+    <ion-textarea rows="10" aria-placeholder="Notes" [(ngModel)]="selectedItem.note"></ion-textarea>
+  </ion-item>
+
 
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar class="button-bar">
+    <button ion-button block (click)="saveItem()">
+    Save  
+    <ion-icon padding name="checkmark-circle"></ion-icon> 
+    </button>
+  </ion-toolbar>
+</ion-footer>

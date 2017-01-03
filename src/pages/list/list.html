@@ -24,10 +24,13 @@
 </ion-content>
 
 
+
+
 <ion-footer>
-  <ion-toolbar>
-    <button block ion-button>
+  <ion-toolbar class="button-bar">
+    <button ion-button block (click)="goToDetailView()">
       Add Reminder
-    </button>
-  </ion-toolbar>
+      <ion-icon padding name="add-circle"></ion-icon>
+    </button>     
+    </ion-toolbar>
 </ion-footer>

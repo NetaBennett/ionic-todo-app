@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { ListPage } from '../pages';
+import { DataService } from '../../services/data.service';
+import { ListPage, ItemDetailsPage } from '../pages';
 
 @Component({
   selector: 'page-home',
@@ -10,12 +11,21 @@ import { ListPage } from '../pages';
 
 export class HomePage {
 
-  constructor(private nav: NavController) {
+  items: Array<any>;
+
+  constructor(private nav: NavController, private dataService: DataService) {
+
+    dataService.getListItems().then(itemData => this.items = itemData);
 
   }
 
-  goToRemindersList() {
+
+
+  goToListView() {
     this.nav.push(ListPage);
   }
-  
+
+  goToDetailView() {
+    this.nav.push(ItemDetailsPage);
+  }
 }

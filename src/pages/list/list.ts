@@ -21,13 +21,17 @@ export class ListPage {
     dataService.getListItems().then(itemData => this.items = itemData);
   } 
    
-  itemTapped(event, item) {
-    this.nav.push(ItemDetailsPage, {
-      item: item
-    });
+  itemTapped(event, selectedItem) {
+    this.goToDetailView(selectedItem);
   }
 
   goHome() {
     this.nav.popToRoot();
+  }
+
+  goToDetailView(selectedItem) {
+    this.nav.push(ItemDetailsPage, {
+      item: selectedItem
+    });
   }
 }
