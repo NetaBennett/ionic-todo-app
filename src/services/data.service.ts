@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
+
 @Injectable()
 export class DataService {
 
@@ -16,48 +17,86 @@ export class DataService {
         return this.getData(this.CATEGORY_KEY);
     }
 
-    public getListItems() {
+    public getItems() {
         return this.getData(this.LIST_KEY);
     }
 
-    public getGroupedItems() {
+    public getItemCountsByCategory() {
         let list = [];
-        let grouped = [];
-        this.getListItems().then((data) => {
+        let grouped = {};
+        let result = [];
+        //category, count
+
+        return this.getItems().then((data) => {
             list = data;
-            
-            
-            
+
+            list.forEach(function (i) {
+                var existing = getExistingEntry(result, i.category.title);
+
+                if (!existing) {
+                    result.push({ id: i.category.id, title: i.category.title, icon: i.category.icon, count: 1 });
+                } else {
+                    existing.count += 1;
+                }
+            });
+
+            function getExistingEntry(ary, catTitle) {
+                let existing = null;
+
+                if (ary && ary.length > 0) {
+                    for (let i = 0; i < ary.length; i++) {
+                        if (ary[i].title === catTitle) {
+                            existing = ary[i];
+                            break;
+                        }
+                    }
+                }
+                return existing;
+            }         
+            //console.table(result);
+
+            return result;
         });
     }
 
     public addListItem(category: any, title: string, note: string) {
-        let list = [];
-        this.getListItems().then((data) => {
-            list = data;
-            let id = this.getNextId(list);
 
-            if (list) {
-                list.push(this.constructItem(id, category, title, note));
-                this.saveData(list, this.LIST_KEY);
-            }
+        return new Promise((resolve, reject) => {
+
+            let list = [];
+            this.getItems().then((data) => {
+                list = data;
+                let id = this.getNextId(list);
+
+                if (list) {
+                    var item = this.constructItem(id, category, title, note);
+                    list.push(item);
+                    this.saveData(list, this.LIST_KEY);               
+                    resolve(item);
+                }
+            });
         });
     }
 
     public removeListItem(id: number) {
-         let list = [];
-        this.getListItems().then((data) => {
-            list = data;
-            
-            let idx = list.findIndex((item) => {
-                return item.id === id;
-            });
 
-            if (idx && idx > -1) {
-                list.splice(idx, 1);
-                this.saveData(list, this.LIST_KEY);
-            }
-        });
+        return new Promise((resolve, reject) => {
+
+            let list = [];
+            this.getItems().then((data) => {
+                list = data;
+
+                let idx = list.findIndex((item) => {
+                    return item.id === id;
+                });
+
+                if (idx && idx > -1) {
+                    list.splice(idx, 1);
+                    this.saveData(list, this.LIST_KEY);
+                    resolve();
+                }
+            });
+        });       
     }
 
     public addCategory(title: string, icon: string) {
@@ -79,9 +118,9 @@ export class DataService {
             categories = data;
 
             if (categories) {
-               let idx = -1;
+                let idx = -1;
 
-                for(let i = 0; i < categories.length; i++ ) {
+                for (let i = 0; i < categories.length; i++) {
                     if (categories[i].title === category.title) {
                         idx = i;
                         break;
@@ -89,7 +128,7 @@ export class DataService {
                 }
 
                 if (idx > -1) {
-                    categories.splice(idx, 1);                    
+                    categories.splice(idx, 1);
                 }
 
                 this.saveData(categories, this.CATEGORY_KEY);
@@ -146,17 +185,15 @@ export class DataService {
             listItems.push(this.constructItem(3, categories[0], 'paint kitchen cabinets', 'kitchen cabinets'));
             listItems.push(this.constructItem(4, categories[6], 'The Civil Wars', ''));
             listItems.push(this.constructItem(5, categories[1], 'order amazon gift cards for xmas', 'C&J and J&B'));
-            listItems.push(this.constructItem(6, categories[1], 'order amazon gift cards for xmas', 'C&J and J&B'));
-
             this.saveData(listItems, this.LIST_KEY);
         });
 
-      
+
     }
 
 
     private constructItem(index: number, category: any, title: string, note: string) {
-        return {id: index, category: category, title: title, note: note};
+        return { id: index, category: category, title: title, note: note };
     }
 
     private constructCategory(index: number, title: string, icon: string) {
@@ -166,12 +203,12 @@ export class DataService {
     private getNextId(list: any) {
         let highestId = -1;
 
-        list.forEach(function(element) {
+        list.forEach(function (element) {
             if (element && element.id && element.id > highestId) {
                 highestId = element.id;
             }
         });
 
-        return highestId+1;
+        return highestId + 1;
     }
 }

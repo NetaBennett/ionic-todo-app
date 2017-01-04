@@ -1,11 +1,7 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>My Reminders</ion-title>
+    <ion-title>Brain Backup</ion-title>
   </ion-navbar>
-
-  <!--<div class="bar bar-header bar-royal">
-    <h1 class="title">My Reminders</h1>
-  </div>-->
 </ion-header>
 
 
@@ -13,57 +9,31 @@
 <ion-content padding>
 
   <ion-card>
-  <ion-card-header>
-    Explore Nearby
-  </ion-card-header>
+    <ion-card-header>
+      Summary
+    </ion-card-header>
 
-  <ion-list>
-    <button ion-item>
-      <ion-icon name="cart" item-left></ion-icon>
-      Shopping
+    <ion-list>
+
+      <button ion-item *ngFor="let item of itemCounts" (click)="itemTapped($event, item)">
+      <ion-icon [name]="item.icon" item-left></ion-icon>
+      {{item.title}}  ({{item.count}})      
     </button>
 
-    <button ion-item>
-      <ion-icon name="medical" item-left></ion-icon>
-      Hospital
-    </button>
-
-    <button ion-item>
-      <ion-icon name="cafe" item-left></ion-icon>
-      Cafe
-    </button>
-
-    <button ion-item>
-      <ion-icon name="paw" item-left></ion-icon>
-      Dog Park
-    </button>
-
-    <button ion-item>
-      <ion-icon name="beer" item-left></ion-icon>
-      Pub
-    </button>
-
-    <button ion-item>
-      <ion-icon name="planet" item-left></ion-icon>
-      Space
-    </button>
-
-  </ion-list>
-</ion-card>
-
-
+    </ion-list>
+  </ion-card>
 
 </ion-content>
 
 <ion-footer>
   <ion-toolbar class="button-bar">
-    <button ion-button block (click)="goToDetailView()">
+    <button ion-button block (click)="goToAddItemView()">
       Add Reminder
       <ion-icon padding name="add-circle"></ion-icon>
-    </button>   
+    </button>
     <button ion-button block outline (click)="goToListView()">
       View List
       <ion-icon padding name="search"></ion-icon>
     </button>
-    </ion-toolbar>
+  </ion-toolbar>
 </ion-footer>

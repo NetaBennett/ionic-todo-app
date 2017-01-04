@@ -32,8 +32,18 @@ export class ItemDetailsPage {
     );
   }
 
-  saveItem() {
-      this.dataService.addListItem(this.selectedCategory, this.selectedItem.title, this.selectedItem.note);
+   saveItem() {
+      this.dataService.addListItem(this.selectedCategory, this.selectedItem.title, this.selectedItem.note)
+      .then(result => { 
+        this.goHome(); 
+      });     
+  }
+
+  removeItem() {
+    this.dataService.removeListItem(this.selectedItem.id)
+      .then(result => { 
+        this.goHome(); 
+      }); 
   }
   
   selectedCategoryChange() {
