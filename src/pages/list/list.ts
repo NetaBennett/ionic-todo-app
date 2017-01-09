@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import * as _ from 'lodash';
 
 import { DataService } from '../../services/data.service';
 import { ItemDetailsPage } from '../pages';
@@ -16,10 +17,12 @@ export class ListPage {
   allItems: any;
   items: any;
   categories: any;
+  queryText: string = '';
 
   constructor(public nav: NavController, public navParams: NavParams,
     private loadingController: LoadingController, public dataService: DataService) {
     this.items = [];
+
 
     this.categoryIdFilter = this.navParams.get('categoryId') || 0;
     let loader = this.loadingController.create({
@@ -59,6 +62,32 @@ export class ListPage {
      loader.dismiss();
     });
 
+  }
+
+  doQueryFilter() {  
+
+    if (this.queryText && this.queryText.trim().length > 0) {
+      let queryTextLower = this.queryText.toLowerCase();
+      let filteredItems = [];
+      
+        _.forEach(this.allItems, itemData => {
+            if (itemData) {
+              if (itemData.title.toLowerCase().includes(queryTextLower) || 
+                itemData.category.title.toLowerCase().includes(queryTextLower)) {
+
+                  filteredItems.push(itemData);
+              }
+            }
+        });
+
+        this.items = []; //dunno why but have to do this for ui model to detect change
+        this.items = filteredItems;
+    } else {
+       this.items = []; //dunno why but have to do this for ui model to detect change
+       this.items = this.allItems;
+    }
+
+   
   }
 
   itemTapped(event, selectedItem) {
