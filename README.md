@@ -4,10 +4,7 @@ Make app for women going thru change who are getting 'brain fog' and need all ki
 
 
 ## Pending Fixes
-#### Refactor item details to handle add new plus edit existing
-#### Change Category input to a dropdown showing text/icon in list items
-#### Make Title and Note editable inputs
-#### Add button to Save item, and return back to List view
+
 
 
 ## Feature Ideas
