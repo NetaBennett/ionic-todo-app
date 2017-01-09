@@ -11,43 +11,48 @@ import { DataService } from '../../services/data.service';
 export class ItemDetailsPage {
   selectedItem: any;
   selectedCategory: any;
-  categories: Array<any>;
+  selectedCategoryName: string;
+  categories: Array<any> = [];
 
   constructor(private nav: NavController, private navParams: NavParams, 
     private loadingController: LoadingController, private dataService: DataService) {
-
-
-    this.selectedItem = this.navParams.get('item') || {};
-    this.selectedCategory = (this.selectedItem) ? this.selectedItem.category : {};
-    
+   
+     this.selectedItem = this.navParams.get('item') || {};
+     this.selectedCategory = (this.selectedItem) ? this.selectedItem.category : {};
+     
 
     let loader = this.loadingController.create({
       content: 'Loading...'
     });
 
     loader.present().then(() => {
-        this.dataService.getCategories().then(data => this.categories = data);
+        this.dataService.getCategories().then(data => {
+          this.categories = data;
+          this.selectedCategory = (this.selectedItem && this.selectedItem.category) ? this.selectedItem.category : {};
+          this.selectedCategoryName = this.selectedCategory.title;
+        });
         loader.dismiss();
       }
     );
   }
 
-   saveItem() {
-      this.dataService.addListItem(this.selectedCategory, this.selectedItem.title, this.selectedItem.note)
+   saveItem() {      
+      this.dataService.saveListItem(this.selectedItem)
       .then(result => { 
         this.goHome(); 
       });     
   }
 
-  removeItem() {
+  removeItem() {   
     this.dataService.removeListItem(this.selectedItem.id)
       .then(result => { 
         this.goHome(); 
       }); 
   }
   
-  selectedCategoryChange() {
-    this.selectedItem.category = this.selectedCategory;
+  selectedCategoryChange() {  
+    let tmp = this.categories.find(cat => cat.title === this.selectedCategoryName);    
+    this.selectedItem.category = tmp; 
   }
 
   goHome() {

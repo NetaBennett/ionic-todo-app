@@ -22,10 +22,8 @@ export class DataService {
     }
 
     public getItemCountsByCategory() {
-        let list = [];
-        let grouped = {};
+        let list = [];      
         let result = [];
-        //category, count
 
         return this.getItems().then((data) => {
             list = data;
@@ -52,27 +50,36 @@ export class DataService {
                     }
                 }
                 return existing;
-            }         
-            //console.table(result);
-
+            }    
             return result;
         });
     }
 
-    public addListItem(category: any, title: string, note: string) {
+    public saveListItem(item: any) {
 
         return new Promise((resolve, reject) => {
 
             let list = [];
             this.getItems().then((data) => {
                 list = data;
-                let id = this.getNextId(list);
+                let existing = item.id > 0 ? true: false;
+                var tmpItem: any;
+
+                if (existing) {
+                    tmpItem = list.find(i => i.id === item.id);
+                    tmpItem.category = item.category;
+                    tmpItem.title = item.title;
+                    tmpItem.note = item.note;
+
+                } else {
+                    let id = this.getNextId(list);
+                    tmpItem = this.constructItem(id, item.category, item.title, item.note);
+                    list.push(tmpItem);
+                }
 
                 if (list) {
-                    var item = this.constructItem(id, category, title, note);
-                    list.push(item);
                     this.saveData(list, this.LIST_KEY);               
-                    resolve(item);
+                    resolve(tmpItem);
                 }
             });
         });

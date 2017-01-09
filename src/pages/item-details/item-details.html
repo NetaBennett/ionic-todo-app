@@ -16,8 +16,8 @@
 
   <ion-item>
     <ion-label>Category</ion-label>
-    <ion-select [(ngModel)]="selectedCategory" (ionChange)="selectedCategoryChange()">
-      <ion-option *ngFor="let cat of categories" [value]="cat">
+    <ion-select [(ngModel)]="selectedCategoryName" (ionChange)="selectedCategoryChange()">
+      <ion-option *ngFor="let cat of categories" [value]="cat.title" te>
         <div>
           {{cat.title}}
         </div>
@@ -36,7 +36,7 @@
   </ion-item>
 
 <ion-item>
-  <button ion-button color="danger" icon-right (click)="removeItem()">   
+  <button ion-button large color="danger" icon-right (click)="removeItem()">   
     Remove Item
     <ion-icon name="remove-circle"></ion-icon>
     </button>
